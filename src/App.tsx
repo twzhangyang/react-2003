@@ -1,45 +1,24 @@
-import React, {useState} from "react";
+import React from "react";
 import "./App.css";
-import {tempWatchedData} from "./data/tempData";
-import {WatchedMovieSummary} from "./components/WatchedMovieSummary";
-import {WatchedMovies} from "./components/WatchedMovies";
-import {WatchedMovieModel} from "./components/movieTypes";
-import {Navbar} from "./components/Navbar";
+import {Logo, Navbar, Search, SearchResult} from "./components/Navbar";
 import {MoviePanel} from "./components/MoviePanel";
+import {WatchedMoviePanel} from "./components/WatchedMoviePanel";
+import {tempMovieData} from "./data/tempData";
 
 export default function App() {
     return (
         <>
-            <Navbar></Navbar>
+            <Navbar>
+                <Logo></Logo>
+                <Search></Search>
+                <SearchResult movies={tempMovieData}></SearchResult>
+            </Navbar>
             <main className="main">
                 <MoviePanel></MoviePanel>
                 <WatchedMoviePanel></WatchedMoviePanel>
             </main>
         </>
     );
-}
-
-
-const WatchedMoviePanel = () => {
-    const [isOpen2, setIsOpen2] = useState(true);
-    const [watched, setWatched] = useState<ReadonlyArray<WatchedMovieModel>>(tempWatchedData);
-
-    return (
-        <div className="box">
-            <button
-                className="btn-toggle"
-                onClick={() => setIsOpen2((open) => !open)}
-            >
-                {isOpen2 ? "–" : "+"}
-            </button>
-            {isOpen2 && (
-                <>
-                    <WatchedMovieSummary watched={watched}></WatchedMovieSummary>
-                    <WatchedMovies watched={watched}></WatchedMovies>
-                </>
-            )}
-        </div>
-    )
 }
 
 

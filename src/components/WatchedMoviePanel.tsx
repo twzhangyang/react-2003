@@ -1,0 +1,27 @@
+import React, {useState} from "react";
+import {WatchedMovieModel} from "./movieTypes";
+import {tempWatchedData} from "../data/tempData";
+import {WatchedMovieSummary} from "./WatchedMovieSummary";
+import {WatchedMovies} from "./WatchedMovies";
+
+export const WatchedMoviePanel = () => {
+    const [isOpen2, setIsOpen2] = useState(true);
+    const [watched, setWatched] = useState<ReadonlyArray<WatchedMovieModel>>(tempWatchedData);
+
+    return (
+        <div className="box">
+            <button
+                className="btn-toggle"
+                onClick={() => setIsOpen2((open) => !open)}
+            >
+                {isOpen2 ? "–" : "+"}
+            </button>
+            {isOpen2 && (
+                <>
+                    <WatchedMovieSummary watched={watched}></WatchedMovieSummary>
+                    <WatchedMovies watched={watched}></WatchedMovies>
+                </>
+            )}
+        </div>
+    )
+}
