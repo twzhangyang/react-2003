@@ -14,9 +14,16 @@ export default function App() {
                 <SearchResult movies={tempMovieData}></SearchResult>
             </Navbar>
             <main className="main">
-                <MoviePanel>
-                    <MovieList movies={tempMovieData}/>
-                </MoviePanel>
+                {/*<MoviePanel>*/}
+                {/*    <MovieList movies={tempMovieData}/>*/}
+                {/*</MoviePanel>*/}
+
+                <MoviePanel element={
+                    <>
+                        <p>Passing component by element</p>
+                        <MovieList movies={tempMovieData}/>
+                    </>
+                }/>
                 <WatchedMoviePanel></WatchedMoviePanel>
             </main>
         </>

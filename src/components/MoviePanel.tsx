@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {MovieModel} from "./movieTypes";
 import {tempMovieData} from "../data/tempData";
 
-export const MoviePanel: React.FC<{ children: React.ReactNode }> = ({children}) => {
+export const MoviePanel: React.FC<{ element: React.ReactElement }> = ({element}) => {
     // const [movies, setMovies] = useState<ReadonlyArray<MovieModel>>(tempMovieData);
     const [isOpen1, setIsOpen1] = useState(true);
 
@@ -14,7 +14,7 @@ export const MoviePanel: React.FC<{ children: React.ReactNode }> = ({children}) 
             >
                 {isOpen1 ? "–" : "+"}
             </button>
-            {isOpen1 && children}
+            {isOpen1 && element}
         </div>
     )
 }
