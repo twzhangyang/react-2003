@@ -3,21 +3,28 @@ import React, {FC, useState} from 'react';
 type Props = {
     maxRating: number,
     color?: string,
-    size?: number
+    size?: number,
+    onSetRating?: (rating: number) => void,
 }
 
 const defaultProps: Partial<Props> = {
     color: 'red',
-    size: 30
+    size: 30,
+    onSetRating: (rating) => {
+    },
 }
 const StarRating: React.FC<Props> = (props) => {
 
-    const {maxRating, color, size} = {...defaultProps, ...props};
+    const {
+        maxRating, color, size,
+        onSetRating
+    } = {...defaultProps, ...props};
 
     const [rating, setRating] = useState(0);
     const [tempRating, setTempRating] = useState(0);
     const handleRating = (rating: number) => {
         setRating(rating);
+        onSetRating!(rating);
     }
 
     const textStyle = {
@@ -53,10 +60,11 @@ type StarProps = {
     color: string,
     size: number
 }
-const Star: React.FC<StarProps> = ({onRate, full,
+const Star: React.FC<StarProps> = ({
+                                       onRate, full,
                                        onHoverIn, onHoverOut,
-    color, size
-}) => {
+                                       color, size
+                                   }) => {
 
     const starStyle = {
         width: `${size / 1.5}px`
