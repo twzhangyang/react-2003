@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import {Logo, Navbar, Search, SearchResult} from "./components/Navbar";
-import {MoviePanel} from "./components/MoviePanel";
+import {MovieList, MoviePanel} from "./components/MoviePanel";
 import {WatchedMoviePanel} from "./components/WatchedMoviePanel";
 import {tempMovieData} from "./data/tempData";
 
@@ -14,7 +14,9 @@ export default function App() {
                 <SearchResult movies={tempMovieData}></SearchResult>
             </Navbar>
             <main className="main">
-                <MoviePanel></MoviePanel>
+                <MoviePanel>
+                    <MovieList movies={tempMovieData}/>
+                </MoviePanel>
                 <WatchedMoviePanel></WatchedMoviePanel>
             </main>
         </>

@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import {MovieModel} from "./movieTypes";
 import {tempMovieData} from "../data/tempData";
 
-export const MoviePanel = () => {
-    const [movies, setMovies] = useState<ReadonlyArray<MovieModel>>(tempMovieData);
+export const MoviePanel: React.FC<{ children: React.ReactNode }> = ({children}) => {
+    // const [movies, setMovies] = useState<ReadonlyArray<MovieModel>>(tempMovieData);
     const [isOpen1, setIsOpen1] = useState(true);
 
     return (
@@ -14,16 +14,20 @@ export const MoviePanel = () => {
             >
                 {isOpen1 ? "–" : "+"}
             </button>
-            {isOpen1 && (
-                <ul className="list">
-                    {movies?.map((movie) => (
-                        <Movie movie={movie} key={movie.imdbID}></Movie>
-                    ))}
-                </ul>
-            )}
+            {isOpen1 && children}
         </div>
     )
 }
+
+export const MovieList: React.FC<{ movies: ReadonlyArray<MovieModel> }> = ({movies}) => {
+    return (
+        <ul className="list">
+            {movies?.map((movie) => (
+                <Movie movie={movie} key={movie.imdbID}></Movie>
+            ))}
+        </ul>
+    );
+};
 
 const Movie: React.FC<{ movie: MovieModel }> = ({movie}) => {
     return (
