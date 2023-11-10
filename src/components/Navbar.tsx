@@ -16,9 +16,13 @@ export const SearchResult: React.FC<{movies: ReadonlyArray<MovieModel>}> = ({mov
         </p>
     )
 }
-export const Search = () => {
-    const [query, setQuery] = useState<string>("");
 
+type SearchProps = {
+    query: string,
+    setQuery: React.Dispatch<React.SetStateAction<string>>
+}
+
+export const Search: React.FC<SearchProps> = ({query, setQuery}) => {
     return (
         <input
             className="search"

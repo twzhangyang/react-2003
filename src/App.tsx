@@ -10,15 +10,37 @@ import {MovieModel} from "./components/movieTypes";
 export default function App() {
 
     const APIKey = process.env.REACT_APP_OMDB_API;
+    const [query, setQuery] = useState('');
     const [movies, setMovies] = useState<MovieModel[]>([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
+
     useEffect(() => {
         setIsLoading(true);
+        setError('')
+
         const fetchMovies = async () => {
-            const result = await fetch(`http://www.omdbapi.com/?apikey=${APIKey}&s=interstellar`)
-            const json = await result.json();
-            setMovies(json.Search);
-            setIsLoading(false);
+            try {
+                const result = await fetch(`http://www.omdbapi.com/?apikey=${APIKey}&s=interstellar`)
+                if (!result.ok) {
+                    throw new Error('Something went wrong with fetching movies')
+                }
+                const json = await result.json();
+                if (!json.Search) {
+                    throw new Error('Movie not found')
+                }
+                setMovies(json.Search);
+            } catch (e: any) {
+                if (e.name !== 'AbortError') {
+                    setError(e.message);
+                }
+            } finally {
+                setIsLoading(false);
+            }
+        }
+
+        if (query.length < 3) {
+            setMovies([]);
         }
 
         fetchMovies();
@@ -28,23 +50,20 @@ export default function App() {
         <>
             <Navbar>
                 <Logo></Logo>
-                <Search></Search>
+                <Search query={query} setQuery={setQuery}></Search>
                 <SearchResult movies={movies}></SearchResult>
             </Navbar>
-            <StarRating maxRating={10}></StarRating>
             <main className="main">
                 {/*<MoviePanel>*/}
                 {/*    <MovieList movies={tempMovieData}/>*/}
                 {/*</MoviePanel>*/}
-
-                {
-                    isLoading ? <Loading/> : <MoviePanel element={
-                        <>
-                            <p>Passing component by element</p>
-                            <MovieList movies={movies}/>
-                        </>
-                    }/>
-                }
+                {error && <ErrorMessage message={error}/>}
+                {isLoading && <Loading></Loading>}
+                {!error && !isLoading && <MoviePanel element={
+                    <>
+                        <MovieList movies={movies}/>
+                    </>
+                }/>}
 
                 <WatchedMoviePanel></WatchedMoviePanel>
             </main>
@@ -54,7 +73,15 @@ export default function App() {
 
 const Loading = () => {
     return (
-        <p>Loading</p>
+        <p className='loader'>Loading</p>
+    )
+}
+
+const ErrorMessage: React.FC<{ message: string }> = ({message}) => {
+    return (
+        <p className='error'>
+            <span>Error:</span> {message}
+        </p>
     )
 }
 
