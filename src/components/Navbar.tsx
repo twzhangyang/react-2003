@@ -1,5 +1,6 @@
-import React, {ReactNode, useState} from "react";
+import React, {ReactNode, useRef, useState} from "react";
 import {MovieModel} from "./movieTypes";
+import {useKey} from "../hooks/useKey";
 
 export const Navbar: React.FC<{children: ReactNode}> = ({children}) => {
     return (
@@ -23,6 +24,16 @@ type SearchProps = {
 }
 
 export const Search: React.FC<SearchProps> = ({query, setQuery}) => {
+    const inputEl = useRef<HTMLInputElement>(null);
+    useKey('Enter', () => {
+        if (document.activeElement === inputEl.current) {
+            return;
+        }
+
+        inputEl.current?.focus();
+        setQuery('');
+    })
+
     return (
         <input
             className="search"
@@ -30,6 +41,7 @@ export const Search: React.FC<SearchProps> = ({query, setQuery}) => {
             placeholder="Search movies..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            ref={inputEl}
         />
 
     )
