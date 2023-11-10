@@ -1,10 +1,11 @@
 import React from "react";
 import {WatchedMovieModel} from "./movieTypes";
+import {watchedMovieModel} from "../MovieDetails";
 
 const average = (arr: number[]) =>
     arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
-export const WatchedMovieSummary: React.FC<{ watched: ReadonlyArray<WatchedMovieModel> }> = ({watched}) => {
+export const WatchedMovieSummary: React.FC<{ watched: ReadonlyArray<watchedMovieModel> }> = ({watched}) => {
     const avgImdbRating = average(watched.map((movie) => movie.imdbRating));
     const avgUserRating = average(watched.map((movie) => movie.userRating));
     const avgRuntime = average(watched.map((movie) => movie.runtime));

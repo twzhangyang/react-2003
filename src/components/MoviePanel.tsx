@@ -19,19 +19,22 @@ export const MoviePanel: React.FC<{ element: React.ReactElement }> = ({element})
     )
 }
 
-export const MovieList: React.FC<{ movies: ReadonlyArray<MovieModel> }> = ({movies}) => {
+export const MovieList: React.FC<{ movies: ReadonlyArray<MovieModel>, onSelectMovie: (id: string) => void }> = ({
+                                                                                                                    movies,
+                                                                                                                    onSelectMovie
+                                                                                                                }) => {
     return (
         <ul className="list">
             {movies?.map((movie) => (
-                <Movie movie={movie} key={movie.imdbID}></Movie>
+                <Movie movie={movie} key={movie.imdbID} onSelectMovie={onSelectMovie}></Movie>
             ))}
         </ul>
     );
 };
 
-const Movie: React.FC<{ movie: MovieModel }> = ({movie}) => {
+const Movie: React.FC<{ movie: MovieModel, onSelectMovie: (id: string) => void }> = ({movie, onSelectMovie}) => {
     return (
-        <li key={movie.imdbID}>
+        <li key={movie.imdbID} onClick={() => onSelectMovie(movie.imdbID)}>
             <img src={movie.Poster} alt={`${movie.Title} poster`}/>
             <h3>{movie.Title}</h3>
             <div>

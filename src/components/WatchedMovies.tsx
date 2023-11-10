@@ -1,7 +1,8 @@
 import React from "react";
 import {WatchedMovieModel} from "./movieTypes";
+import {watchedMovieModel} from "../MovieDetails";
 
-export const WatchedMovies: React.FC<{ watched: ReadonlyArray<WatchedMovieModel> }> = ({watched}) => {
+export const WatchedMovies: React.FC<{ watched: ReadonlyArray<watchedMovieModel> }> = ({watched}) => {
     return (
         <ul className="list">
             {watched.map((movie) => (
@@ -11,10 +12,10 @@ export const WatchedMovies: React.FC<{ watched: ReadonlyArray<WatchedMovieModel>
     )
 }
 
-const WatchedMovie: React.FC<{ movie: WatchedMovieModel }> = ({movie}) => {
+const WatchedMovie: React.FC<{ movie: watchedMovieModel }> = ({movie}) => {
     return (<li key={movie.imdbID}>
-            <img src={movie.Poster} alt={`${movie.Title} poster`}/>
-            <h3>{movie.Title}</h3>
+            <img src={movie.poster} alt={`${movie.title} poster`}/>
+            <h3>{movie.title}</h3>
             <div>
                 <p>
                     <span>⭐️</span>

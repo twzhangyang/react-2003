@@ -3,10 +3,13 @@ import {WatchedMovieModel} from "./movieTypes";
 import {tempWatchedData} from "../data/tempData";
 import {WatchedMovieSummary} from "./WatchedMovieSummary";
 import {WatchedMovies} from "./WatchedMovies";
+import {watchedMovieModel} from "../MovieDetails";
 
-export const WatchedMoviePanel = () => {
+type watchedMoviePanelProps = {
+    watched: ReadonlyArray<watchedMovieModel>
+};
+export const WatchedMoviePanel: React.FC<watchedMoviePanelProps> = ({watched}) => {
     const [isOpen2, setIsOpen2] = useState(true);
-    const [watched, setWatched] = useState<ReadonlyArray<WatchedMovieModel>>(tempWatchedData);
 
     return (
         <div className="box">

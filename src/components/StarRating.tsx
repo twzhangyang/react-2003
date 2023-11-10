@@ -4,7 +4,7 @@ type Props = {
     maxRating: number,
     color?: string,
     size?: number,
-    onSetRating?: (rating: number) => void,
+    onSetRating?: React.Dispatch<React.SetStateAction<number>>,
 }
 
 const defaultProps: Partial<Props> = {

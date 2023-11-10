@@ -6,6 +6,9 @@ import {WatchedMoviePanel} from "./components/WatchedMoviePanel";
 import {tempMovieData} from "./data/tempData";
 import StarRating from "./components/StarRating";
 import {MovieModel} from "./components/movieTypes";
+import {isNumberObject} from "util/types";
+import Loading from "./components/Loader";
+import MovieDetails, {watchedMovieModel} from "./MovieDetails";
 
 export default function App() {
 
@@ -14,6 +17,24 @@ export default function App() {
     const [movies, setMovies] = useState<MovieModel[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [selectedId, setSelectedId] = useState<null | string>(null);
+    const [watched, setWatched] = useState<watchedMovieModel[]>([])
+
+    const handleSelectMovie = (id: string) => {
+        setSelectedId((selectedId) => id === selectedId ? null : id)
+    }
+
+    const handleCloseMovie = () => {
+        setSelectedId(null);
+    }
+
+    const handleAddWatched = (movie: watchedMovieModel) => {
+        setWatched((watched) => [...watched, movie])
+    }
+
+    const handleDeletedWatched = (id: string) => {
+        setWatched((watched) => watched.filter((movie) => movie.imdbID !== id))
+    }
 
     useEffect(() => {
         setIsLoading(true);
@@ -21,13 +42,18 @@ export default function App() {
 
         const fetchMovies = async () => {
             try {
-                const result = await fetch(`http://www.omdbapi.com/?apikey=${APIKey}&s=interstellar`)
+                const result = await fetch(`http://www.omdbapi.com/?apikey=${APIKey}&s=${query}`)
                 if (!result.ok) {
                     throw new Error('Something went wrong with fetching movies')
                 }
                 const json = await result.json();
+
+                if (json.Response === 'False' && json.Error === 'Incorrect IMDb ID.') {
+                    return;
+                }
+
                 if (!json.Search) {
-                    throw new Error('Movie not found')
+                    throw new Error('Movie not found');
                 }
                 setMovies(json.Search);
             } catch (e: any) {
@@ -44,7 +70,7 @@ export default function App() {
         }
 
         fetchMovies();
-    }, []);
+    }, [query]);
 
     return (
         <>
@@ -61,21 +87,18 @@ export default function App() {
                 {isLoading && <Loading></Loading>}
                 {!error && !isLoading && <MoviePanel element={
                     <>
-                        <MovieList movies={movies}/>
+                        <MovieList movies={movies} onSelectMovie={handleSelectMovie}/>
                     </>
                 }/>}
+                {selectedId && <MovieDetails selectedId={selectedId} onCloseMovie={handleCloseMovie}
+                                             onAddWatched={handleAddWatched} watched={watched}/>}
 
-                <WatchedMoviePanel></WatchedMoviePanel>
+                {!selectedId && <WatchedMoviePanel watched={watched}></WatchedMoviePanel>}
             </main>
         </>
     );
 }
 
-const Loading = () => {
-    return (
-        <p className='loader'>Loading</p>
-    )
-}
 
 const ErrorMessage: React.FC<{ message: string }> = ({message}) => {
     return (
