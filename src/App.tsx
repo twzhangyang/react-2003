@@ -7,14 +7,15 @@ import {MovieModel} from "./components/movieTypes";
 import Loading from "./components/Loader";
 import MovieDetails, {watchedMovieModel} from "./MovieDetails";
 import {useLocalStorageState} from "./hooks/useLocalStorageState";
+import {useMovies} from "./hooks/useMovies";
 
 export default function App() {
 
-    const APIKey = process.env.REACT_APP_OMDB_API;
     const [query, setQuery] = useState('');
-    const [movies, setMovies] = useState<MovieModel[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState('');
+    // const [movies, setMovies] = useState<MovieModel[]>([]);
+    // const [isLoading, setIsLoading] = useState(false);
+    // const [error, setError] = useState('');
+    const { movies, isLoading, error } = useMovies(query);
     const [selectedId, setSelectedId] = useState<null | string>(null);
     // const [watched, setWatched] = useState<watchedMovieModel[]>([])
     const [watched, setWatched] = useLocalStorageState<watchedMovieModel[]>([], "watched");
@@ -35,41 +36,41 @@ export default function App() {
         setWatched((watched) => watched.filter((movie) => movie.imdbID !== id))
     }
 
-    useEffect(() => {
-        setIsLoading(true);
-        setError('')
-
-        const fetchMovies = async () => {
-            try {
-                const result = await fetch(`http://www.omdbapi.com/?apikey=${APIKey}&s=${query}`)
-                if (!result.ok) {
-                    throw new Error('Something went wrong with fetching movies')
-                }
-                const json = await result.json();
-
-                if (json.Response === 'False' && json.Error === 'Incorrect IMDb ID.') {
-                    return;
-                }
-
-                if (!json.Search) {
-                    throw new Error('Movie not found');
-                }
-                setMovies(json.Search);
-            } catch (e: any) {
-                if (e.name !== 'AbortError') {
-                    setError(e.message);
-                }
-            } finally {
-                setIsLoading(false);
-            }
-        }
-
-        if (query.length < 3) {
-            setMovies([]);
-        }
-
-        fetchMovies();
-    }, [query]);
+    // useEffect(() => {
+    //     setIsLoading(true);
+    //     setError('')
+    //
+    //     const fetchMovies = async () => {
+    //         try {
+    //             const result = await fetch(`http://www.omdbapi.com/?apikey=${APIKey}&s=${query}`)
+    //             if (!result.ok) {
+    //                 throw new Error('Something went wrong with fetching movies')
+    //             }
+    //             const json = await result.json();
+    //
+    //             if (json.Response === 'False' && json.Error === 'Incorrect IMDb ID.') {
+    //                 return;
+    //             }
+    //
+    //             if (!json.Search) {
+    //                 throw new Error('Movie not found');
+    //             }
+    //             setMovies(json.Search);
+    //         } catch (e: any) {
+    //             if (e.name !== 'AbortError') {
+    //                 setError(e.message);
+    //             }
+    //         } finally {
+    //             setIsLoading(false);
+    //         }
+    //     }
+    //
+    //     if (query.length < 3) {
+    //         setMovies([]);
+    //     }
+    //
+    //     fetchMovies();
+    // }, [query]);
 
     return (
         <>

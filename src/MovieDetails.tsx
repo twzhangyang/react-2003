@@ -2,6 +2,7 @@ import {useEffect, useState} from "react";
 import Loader from "./components/Loader";
 import {MovieModel} from "./components/movieTypes";
 import StarRating from "./components/StarRating";
+import {useKey} from "./hooks/useKey";
 
 export type movieDetailModel = {
     Title: string,
@@ -71,23 +72,24 @@ const MovieDetails: React.FC<movieDetailsProps> = ({selectedId, onCloseMovie, on
         onAddWatched(newWatchedMovie);
         onCloseMovie();
     };
+    useKey("Escape", onCloseMovie);
 
-    useEffect(
-        function () {
-            function callback(e: any) {
-                if (e.code === "Escape") {
-                    onCloseMovie();
-                }
-            }
-
-            document.addEventListener("keydown", callback);
-
-            return function () {
-                document.removeEventListener("keydown", callback);
-            };
-        },
-        [onCloseMovie]
-    );
+    // useEffect(
+    //     function () {
+    //         function callback(e: any) {
+    //             if (e.code === "Escape") {
+    //                 onCloseMovie();
+    //             }
+    //         }
+    //
+    //         document.addEventListener("keydown", callback);
+    //
+    //         return function () {
+    //             document.removeEventListener("keydown", callback);
+    //         };
+    //     },
+    //     [onCloseMovie]
+    // );
 
     useEffect(
         function () {
