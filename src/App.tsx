@@ -3,13 +3,10 @@ import "./App.css";
 import {Logo, Navbar, Search, SearchResult} from "./components/Navbar";
 import {MovieList, MoviePanel} from "./components/MoviePanel";
 import {WatchedMoviePanel} from "./components/WatchedMoviePanel";
-import {tempMovieData} from "./data/tempData";
-import StarRating from "./components/StarRating";
 import {MovieModel} from "./components/movieTypes";
-import {isNumberObject} from "util/types";
 import Loading from "./components/Loader";
 import MovieDetails, {watchedMovieModel} from "./MovieDetails";
-import {useLocalStorageState} from "./components/useLocalStorageState";
+import {useLocalStorageState} from "./hooks/useLocalStorageState";
 
 export default function App() {
 
