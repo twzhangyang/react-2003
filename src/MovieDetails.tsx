@@ -44,7 +44,20 @@ const MovieDetails: React.FC<movieDetailsProps> = ({selectedId, onCloseMovie, on
         (movie) => movie.imdbID === selectedId
     )?.userRating;
 
-    function handleAdd() {
+    const {
+        Title: title,
+        Year: year,
+        Poster: poster,
+        Runtime: runtime,
+        imdbRating,
+        Plot: plot,
+        Released: released,
+        Actors: actors,
+        Director: director,
+        Genre: genre,
+    } = movie ?? {};
+
+    const handleAdd = () => {
         const newWatchedMovie = {
             imdbID: selectedId,
             title: title!,
@@ -57,7 +70,7 @@ const MovieDetails: React.FC<movieDetailsProps> = ({selectedId, onCloseMovie, on
 
         onAddWatched(newWatchedMovie);
         onCloseMovie();
-    }
+    };
 
     useEffect(
         function () {
@@ -94,19 +107,6 @@ const MovieDetails: React.FC<movieDetailsProps> = ({selectedId, onCloseMovie, on
         },
         [selectedId]
     );
-
-    const {
-        Title: title,
-        Year: year,
-        Poster: poster,
-        Runtime: runtime,
-        imdbRating,
-        Plot: plot,
-        Released: released,
-        Actors: actors,
-        Director: director,
-        Genre: genre,
-    } = movie ?? {};
 
     useEffect(
         function () {

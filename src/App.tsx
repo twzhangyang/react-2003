@@ -9,6 +9,7 @@ import {MovieModel} from "./components/movieTypes";
 import {isNumberObject} from "util/types";
 import Loading from "./components/Loader";
 import MovieDetails, {watchedMovieModel} from "./MovieDetails";
+import {useLocalStorageState} from "./components/useLocalStorageState";
 
 export default function App() {
 
@@ -18,7 +19,8 @@ export default function App() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [selectedId, setSelectedId] = useState<null | string>(null);
-    const [watched, setWatched] = useState<watchedMovieModel[]>([])
+    // const [watched, setWatched] = useState<watchedMovieModel[]>([])
+    const [watched, setWatched] = useLocalStorageState<watchedMovieModel[]>([], "watched");
 
     const handleSelectMovie = (id: string) => {
         setSelectedId((selectedId) => id === selectedId ? null : id)
@@ -29,7 +31,7 @@ export default function App() {
     }
 
     const handleAddWatched = (movie: watchedMovieModel) => {
-        setWatched((watched) => [...watched, movie])
+        setWatched((watched: watchedMovieModel[]) => [...watched, movie])
     }
 
     const handleDeletedWatched = (id: string) => {
