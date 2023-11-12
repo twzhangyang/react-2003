@@ -3,9 +3,8 @@ import "./App.css";
 import {Logo, Navbar, Search, SearchResult} from "./components/Navbar";
 import {MovieList, MoviePanel} from "./components/MoviePanel";
 import {WatchedMoviePanel} from "./components/WatchedMoviePanel";
-import {MovieModel} from "./components/movieTypes";
 import Loading from "./components/Loader";
-import MovieDetails, {watchedMovieModel} from "./MovieDetails";
+import MovieDetails, {watchedMovieModel} from "./components/MovieDetails";
 import {useLocalStorageState} from "./hooks/useLocalStorageState";
 import {useMovies} from "./hooks/useMovies";
 

@@ -1,6 +1,6 @@
 import React from "react";
 import {WatchedMovieModel} from "./movieTypes";
-import {watchedMovieModel} from "../MovieDetails";
+import {watchedMovieModel} from "./MovieDetails";
 
 const average = (arr: number[]) =>
     arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);

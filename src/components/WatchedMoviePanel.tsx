@@ -3,7 +3,7 @@ import {WatchedMovieModel} from "./movieTypes";
 import {tempWatchedData} from "../data/tempData";
 import {WatchedMovieSummary} from "./WatchedMovieSummary";
 import {WatchedMovies} from "./WatchedMovies";
-import {watchedMovieModel} from "../MovieDetails";
+import {watchedMovieModel} from "./MovieDetails";
 
 type watchedMoviePanelProps = {
     watched: ReadonlyArray<watchedMovieModel>

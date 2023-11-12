@@ -1,6 +1,6 @@
 import React from "react";
 import {WatchedMovieModel} from "./movieTypes";
-import {watchedMovieModel} from "../MovieDetails";
+import {watchedMovieModel} from "./MovieDetails";
 
 export const WatchedMovies: React.FC<{ watched: ReadonlyArray<watchedMovieModel> }> = ({watched}) => {
     return (

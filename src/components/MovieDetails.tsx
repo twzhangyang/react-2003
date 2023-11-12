@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
-import Loader from "./components/Loader";
-import {MovieModel} from "./components/movieTypes";
-import StarRating from "./components/StarRating";
-import {useKey} from "./hooks/useKey";
+import Loader from "./Loader";
+import {MovieModel} from "./movieTypes";
+import StarRating from "./StarRating";
+import {useKey} from "../hooks/useKey";
 
 export type movieDetailModel = {
     Title: string,
