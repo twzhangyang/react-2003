@@ -1,8 +1,8 @@
 import {combineReducers} from "redux";
-import {customerReducer} from "../components/bank/customers/customerSlice";
 import todosReducer from "../components/todo/reducer";
 import {accountReducer} from "../components/bank/accounts/accountSlice";
 import {StateType} from "typesafe-actions";
+import customerReducer from "../components/bank/customers/reducer";
 
 const rootReducer = combineReducers({
     customer: customerReducer,
@@ -11,5 +11,4 @@ const rootReducer = combineReducers({
 })
 
 export default rootReducer;
-export type AppState = StateType<typeof rootReducer>;
 

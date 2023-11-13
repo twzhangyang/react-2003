@@ -1,8 +1,7 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {deposit, payLoan, requestLoan, withdraw} from "../accountSlice";
-import {AppStore} from "../../../../redux/store";
-import {AppState} from "../../../../redux/root-reducer";
+import {RootState} from 'MyModels';
 import {Dispatch} from "redux";
 
 function AccountOperations() {
@@ -18,7 +17,7 @@ function AccountOperations() {
         loanPurpose: currentLoanPurpose,
         balance,
         isLoading,
-    } = useSelector((store: AppState) => store.account);
+    } = useSelector((store: RootState) => store.account);
 
     function handleDeposit() {
         // if (!depositAmount) return;
