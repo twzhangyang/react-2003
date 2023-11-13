@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import React from "react";
-import CreateCustomer from "../components/bank/customers/CreateCustomer";
-import Customer from "../components/bank/customers/Customer";
+import CreateCustomer from "../components/bank/customers/components/CreateCustomer";
+import Customer from "../components/bank/customers/components/Customer";
 
 function App() {
     const fullName = useSelector((state: any) => state.customer.fullName);

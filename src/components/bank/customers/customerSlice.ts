@@ -1,10 +1,10 @@
-const initialState = {
+import {CustomerModel} from "./customerType";
+
+const initialState: CustomerModel = {
     fullName: "",
     nationalID: "",
     createdAt: "",
 };
-
-export type CustomerModel = typeof initialState;
 
 export const customerReducer = (state = initialState, action: any) => {
     switch (action.type) {

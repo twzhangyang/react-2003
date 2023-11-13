@@ -3,10 +3,7 @@ import {customerReducer} from "../components/bank/customers/customerSlice";
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import {configureStore} from "@reduxjs/toolkit";
-
-const rootReducer = combineReducers({
-    customer: customerReducer
-})
+import rootReducer from "./root-reducer";
 
 // v1. Manually create store
 // export const store = createStore(rootReducer);
@@ -29,6 +26,9 @@ const rootReducer = combineReducers({
 // );
 
 // v3. create store by redux toolkit
-export const store = configureStore({
+const store = configureStore({
     reducer: rootReducer
 })
+
+export default store;
+
