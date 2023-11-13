@@ -2,6 +2,8 @@ import { useSelector } from "react-redux";
 import React from "react";
 import CreateCustomer from "../components/bank/customers/components/CreateCustomer";
 import Customer from "../components/bank/customers/components/Customer";
+import AccountOperations from "../components/bank/accounts/components/AccountOperations";
+import BalanceDisplay from "../components/bank/accounts/components/BalanceDisplay";
 
 function App() {
     const fullName = useSelector((state: any) => state.customer.fullName);
@@ -14,8 +16,8 @@ function App() {
             ) : (
                 <>
                     <Customer />
-                    {/*<AccountOperations />*/}
-                    {/*<BalanceDisplay />*/}
+                    <AccountOperations />
+                    <BalanceDisplay />
                 </>
             )}
         </div>

@@ -4,6 +4,7 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import {configureStore} from "@reduxjs/toolkit";
 import rootReducer from "./root-reducer";
+import {StateType} from "typesafe-actions";
 
 // v1. Manually create store
 // export const store = createStore(rootReducer);
@@ -31,4 +32,6 @@ const store = configureStore({
 })
 
 export default store;
+
+export type AppStore = StateType<typeof store>;
 
