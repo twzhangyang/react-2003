@@ -1,6 +1,6 @@
-import {CustomerModel} from "./customerType";
+import {customerModel} from "./customerType";
 
-const initialState: CustomerModel = {
+const initialState: customerModel = {
     fullName: "",
     nationalID: "",
     createdAt: "",

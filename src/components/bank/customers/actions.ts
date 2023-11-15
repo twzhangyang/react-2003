@@ -1,5 +1,5 @@
 import {action, createAction} from "typesafe-actions";
-import {CustomerModel} from "./customerType";
+import {customerModel} from "./customerType";
 
 // export const add1 = (title: string) => action('todos/ADD', {id: '123', title, completed: false});
 type CreateCustomer = {

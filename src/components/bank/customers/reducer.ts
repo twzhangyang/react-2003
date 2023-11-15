@@ -15,11 +15,11 @@
 // }
 
 import {createReducer} from "typesafe-actions";
-import {CustomerModel} from "./customerType";
+import {customerModel} from "./customerType";
 import {createCustomer, updateName} from "./actions";
 
 const reducer =
-    createReducer({fullName: '', nationalID: '', createdAt: ''} as CustomerModel)
+    createReducer({fullName: '', nationalID: '', createdAt: ''} as customerModel)
         .handleAction(createCustomer, (state, action) => {
             return {
                 ...state,

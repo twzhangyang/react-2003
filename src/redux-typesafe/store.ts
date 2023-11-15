@@ -5,6 +5,7 @@ import thunk from "redux-thunk";
 import {configureStore} from "@reduxjs/toolkit";
 import rootReducer from "./root-reducer";
 import {StateType} from "typesafe-actions";
+import {createEpicMiddleware} from "redux-observable";
 
 // v1. Manually create store
 // export const store = createStore(rootReducer);

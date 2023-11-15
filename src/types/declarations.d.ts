@@ -5,6 +5,11 @@ declare global {
             // ... add other environment variables as needed
         }
     }
+
+    interface Window {
+        __REDUX_DEVTOOLS_EXTENSION_COMPOSE__: boolean;
+    }
+
 }
 
 export {};
