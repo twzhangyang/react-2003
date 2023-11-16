@@ -1,5 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Account} from "MyModels";
+import {AppThunk} from "../../../redux-rtk/store";
+import {incrementByAmount, selectCount} from "../../counter/counterSlice";
 
 const initialState: Account = {
     balance: 0,
@@ -47,21 +49,14 @@ export const depositOtherCurrency = createAsyncThunk('account/convertCurrency',
         return (data.rates.USD as number);
     })
 
-// export const deposit = (amount: number, currency: string) => {
-//     if (currency === "USD") return {type: "account/deposit", payload: amount};
-//
-//     return async (dispatch: any, getState: any) => {
-//         dispatch({type: "account/convertingCurrency"});
-//
-//         const res = await fetch(
-//             `https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`
-//         );
-//         const data = await res.json();
-//         const converted = data.rates.USD;
-//
-//         dispatch({type: "account/deposit", payload: converted});
-//     };
-// };
+export const deposit = ({amount, currency}: { amount: number, currency: string }): AppThunk =>
+    (dispatch, getState) => {
+        if (currency === "USD") {
+            dispatch(depositUS(amount));
+        } else {
+            dispatch(depositOtherCurrency({amount, currency}))
+        }
+    }
 
 export const {depositUS, withdraw, requestLoan, payLoan} = slice.actions;
 export default slice.reducer;
