@@ -1,6 +1,7 @@
-import {customerModel} from "./customerType";
+import {CustomerModel} from "./customerType";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-const initialState: customerModel = {
+const initialState: CustomerModel = {
     fullName: "",
     nationalID: "",
     createdAt: "",
@@ -22,10 +23,20 @@ export const customerReducer = (state = initialState, action: any) => {
     }
 }
 
-export const createCustomer = (fullName: string, nationalID: string) => ({
-    type: "customer/createCustomer",
-    payload: {fullName, nationalID, createdAt: new Date().toISOString()},
+const slice = createSlice({
+    name: 'customer',
+    initialState,
+    reducers: {
+        updateName: (state, action: PayloadAction<string>) => {
+            state.fullName = action.payload
+        },
+        createCustomer: (state, action: PayloadAction<{ fullName: string, nationalID: string }>) => {
+            state.fullName = action.payload.fullName;
+            state.nationalID = action.payload.nationalID;
+            state.createdAt = new Date().toISOString();
+        }
+    }
 });
 
-export const updateName = (fullName: string) => ({type: "customer/updateName", payload: fullName});
-
+export const {updateName, createCustomer} = slice.actions;
+export default slice.reducer;
