@@ -1,59 +1,26 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {Account} from "MyModels";
-import {stat} from "fs";
 
 const initialState: Account = {
     balance: 0,
     loan: 0,
     loanPurpose: "",
     isLoading: false,
+    currency: "USD",
 };
-
-export const accountReducer = (state = initialState, action: any) => {
-    switch (action.type) {
-        case "account/deposit":
-            return {
-                ...state,
-                balance: state.balance + action.payload,
-                isLoading: false,
-            };
-        case "account/withdraw":
-            return {...state, balance: state.balance - action.payload};
-        case "account/requestLoan":
-            if (state.loan > 0) return state;
-            // LATER
-            return {
-                ...state,
-                loan: action.payload.amount,
-                loanPurpose: action.payload.purpose,
-                balance: state.balance + action.payload.amount,
-            };
-        case "account/payLoan":
-            return {
-                ...state,
-                loan: 0,
-                loanPurpose: "",
-                balance: state.balance - state.loan,
-            };
-        case "account/convertingCurrency":
-            return {...state, isLoading: true};
-
-        default:
-            return state;
-    }
-}
 
 const slice = createSlice({
     name: 'account',
     initialState,
     reducers: {
-        deposit: (state, action: PayloadAction<number>) => {
+        depositUS: (state, action: PayloadAction<number>) => {
             state.balance += action.payload;
+            state.currency = "USD";
         },
         withdraw: (state, action: PayloadAction<number>) => {
             state.balance -= action.payload;
         },
-        requestLoan: (state, action: PayloadAction<{ loan: number, loanPurpose: string}>) => {
+        requestLoan: (state, action: PayloadAction<{ loan: number, loanPurpose: string }>) => {
             if (state.loan > 0) return;
 
             state.loan = action.payload.loan;
@@ -65,8 +32,20 @@ const slice = createSlice({
             state.loan = 0;
             state.loanPurpose = "";
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(depositOtherCurrency.fulfilled, (state, action) => {
+            state.balance += action.payload;
+        })
     }
 })
+
+export const depositOtherCurrency = createAsyncThunk('account/convertCurrency',
+    async ({amount, currency}: { amount: number, currency: string }) => {
+        const response = await fetch(`https://api.frankfurter.app/latest?amount=${amount}&from=${currency}&to=USD`);
+        const data: any = await response.json();
+        return (data.rates.USD as number);
+    })
 
 // export const deposit = (amount: number, currency: string) => {
 //     if (currency === "USD") return {type: "account/deposit", payload: amount};
@@ -84,5 +63,5 @@ const slice = createSlice({
 //     };
 // };
 
-export const { deposit, withdraw, requestLoan, payLoan} = slice.actions;
+export const {depositUS, withdraw, requestLoan, payLoan} = slice.actions;
 export default slice.reducer;

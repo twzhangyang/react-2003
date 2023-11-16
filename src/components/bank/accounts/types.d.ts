@@ -4,5 +4,6 @@ declare module 'MyModels' {
         loan: number,
         loanPurpose: string,
         isLoading: boolean,
+        currency: string
     }
 }

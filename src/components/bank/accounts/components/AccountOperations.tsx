@@ -1,8 +1,8 @@
 import {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {deposit, payLoan, requestLoan, withdraw} from "../accountSlice";
+import {depositOtherCurrency, depositUS, payLoan, requestLoan, withdraw} from "../accountSlice";
 import {RootState} from 'MyModels';
-import {Dispatch} from "redux";
+import {useAppDispatch} from "../../../../redux-rtk/hooks";
 
 function AccountOperations() {
     const [depositAmount, setDepositAmount] = useState("");
@@ -11,7 +11,7 @@ function AccountOperations() {
     const [loanPurpose, setLoanPurpose] = useState("");
     const [currency, setCurrency] = useState("USD");
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const {
         loan: currentLoan,
         loanPurpose: currentLoanPurpose,
@@ -20,11 +20,14 @@ function AccountOperations() {
     } = useSelector((store: RootState) => store.account);
 
     function handleDeposit() {
-        // if (!depositAmount) return;
-        //
-        // dispatch(deposit(depositAmount, currency));
-        // setDepositAmount("");
-        // setCurrency("USD");
+        if (!depositAmount) return;
+        if (currency === 'USD') {
+            dispatch(depositUS(+depositAmount))
+        } else {
+            dispatch(depositOtherCurrency({amount: +depositAmount, currency}))
+        }
+        setDepositAmount("");
+        setCurrency("USD");
     }
 
     function handleWithdrawal() {
