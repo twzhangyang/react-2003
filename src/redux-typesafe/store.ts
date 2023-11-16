@@ -27,12 +27,5 @@ import {createEpicMiddleware} from "redux-observable";
 //     composeWithDevTools(applyMiddleware(thunk))
 // );
 
-// v3. create store by redux toolkit
-const store = configureStore({
-    reducer: rootReducer
-})
 
-export default store;
-
-export type AppStore = StateType<typeof store>;
 
