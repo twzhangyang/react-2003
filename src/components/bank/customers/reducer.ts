@@ -18,6 +18,7 @@ import {createReducer} from "typesafe-actions";
 import {CustomerModel} from "./customerType";
 import {createCustomer, updateName} from "./actions";
 
+// typesafe-action API
 const reducer =
     createReducer({fullName: '', nationalID: '', createdAt: ''} as CustomerModel)
         .handleAction(createCustomer, (state, action) => {

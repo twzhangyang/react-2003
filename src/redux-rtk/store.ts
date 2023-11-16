@@ -1,9 +1,9 @@
 // v3. create store by redux toolkit
 
 import {Action, combineReducers} from "redux";
-import customerReducer from "../components/bank/customers/reducer";
+import customerReducer from "../components/bank/customers/customerSlice";
 import todosReducer from "../components/todo/reducer";
-import accountReducer from "../components/bank/accounts/reducer";
+import accountReducer from "../components/bank/accounts/accountSlice";
 import counterReducer from "../components/counter/counterSlice"
 import {configureStore, ThunkAction} from "@reduxjs/toolkit";
 
